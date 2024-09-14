@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#userForm').on('submit', function (event) {
-        event.preventDefault(); // Submits the form without triggering a page refresh
+        event.preventDefault(); // Prevents page refresh on form submission
 
         // Collect user inputs
         var name = $('#name').val();
@@ -29,15 +29,23 @@ $(document).ready(function () {
                     }
                 ]
             }),
-            success: function (response) { //Displays the response from the proxy server
+            success: function (response) {
+                // Update the UI with the fetched data
+                $('#header').hide();
+                $('#subheader').hide();
+                $('#dataDisplay').removeClass('hidden');
                 $('#dataDisplay').html(response.choices[0].message.content);
-
-                
+                $('#top-half').addClass('quote-bg'); // Changes the background to black
             },
-            error: function () {  // This fires if the request fails
-                $('#dataDisplay').html('An error occurred while fetching data.');
+            error: function () {  // Handles errors
+                // Update the UI with a placeholder quote in case of an error
+                $('#header').hide();
+                $('#subheader').hide();
+                $('#dataDisplay').removeClass('hidden');
+                $('#displayMessage').text('Unknown figure said:');
+                $('#displayQuote').text('The greatest things are never said, but often thought.');
+                $('#top-half').addClass('quote-bg'); // Changes the background to black
             }
-            
         });
     });
 });

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real Fake Quotes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles to ensure responsive two-column layout */
+        @media (min-width: 768px) {
+            .container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-teal-400 via-blue-500 to-indigo-600 text-gray-800 font-sans flex items-center justify-center min-h-screen px-8 py-6">
+    <div class="container p-8">
+        <!-- First Column -->
+        <div class="flex flex-col items-start justify-center p-6 border border-gray-300 rounded-lg bg-white shadow-lg">
+            <h1 class="text-4xl font-bold mb-2">Real Fake Quotes</h1>
+            <h2 class="text-xl sm:text-2xl md:text-4xl text-gray-600 mb-6 leading-relaxed">
+                The world's largest database of <br>things people never said
+            </h2>
+
+            <h3 class="text-2xl font-semibold mb-4">Create New Quote</h3>
+
+            <!-- User Input Form -->
+            <form id="userForm" class="space-y-4 w-full max-w-md">
+                <div>
+                    <label for="name" class="block text-lg font-medium text-gray-700">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Choose someone famous" title="It can be anybody living or dead, real or fictional. The more famous they are, the better your quote is likely to be." maxlength="30" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg" required>
+                </div>
+
+                <div>
+                    <label for="topic" class="block text-lg font-medium text-gray-700">Topic</label>
+                    <input type="text" id="topic" name="topic"  placeholder="Give them a topic" title="They'll tell you about anything you like, so long as you can ask in under 30 characters" maxlength="30" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg" required>
+                </div>
+
+                <div>
+                    <label for="words" class="block text-lg font-medium text-gray-700">Word Count</label>
+                    <input type="number" id="words" name="words" placeholder="Pick a number 15-100" title="Go shorter for a punchy quote, or go higher for a short essay" min="15" max="100" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg" required>
+                </div>
+
+                <button type="submit" class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-lg">Submit</button>
+            </form>
+        </div>
+
+        <!-- Second Column -->
+        <div class="flex flex-col items-center justify-center p-6 border border-gray-300 rounded-lg bg-white shadow-lg">
+            <div id="dataDisplay" class="w-full max-w-md text-center">
+                <!-- Display Message -->
+                <p id="displayMessage" class="font-bold mb-4"></p>
+                <!-- Display Quote -->
+                <p id="displayQuote" class="text-lg"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts/alt_script.js"></script>
+</body>
+</html>

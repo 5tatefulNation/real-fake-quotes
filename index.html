@@ -6,91 +6,62 @@
     <title>Real Fake Quotes</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Full height for flex container */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Container to split screen vertically */
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100vh;
-        }
-
-        /* Top section (header/subheader or data display) */
-        .top-half {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: white;
-            transition: background-color 0.3s ease;
-        }
-
-        /* Bottom section (input form) */
-        .bottom-half {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        /* Change background when data is displayed */
-        .quote-bg {
-            background-color: black;
-            color: white;
+        .button-icon {
+            display: inline-block;
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: middle;
+            margin-right: 0.5em;
         }
     </style>
 </head>
-<body class="bg-gradient-to-b from-teal-400 via-blue-500 to-indigo-600 text-gray-800 font-sans">
-    <div class="container">
-        <!-- Top Half: Header and Subheader / Data Display -->
-        <div id="top-half" class="top-half">
-            <h1 id="header" class="text-4xl font-bold mb-2">Real Fake Quotes</h1>
-            <h2 id="subheader" class="text-xl sm:text-2xl md:text-4xl text-gray-600 mb-6 leading-relaxed">
-                The world's largest database of <br>things people never said
-            </h2>
+<body class="bg-gradient-to-b from-teal-400 via-blue-500 to-indigo-600 text-gray-800 font-sans flex items-center justify-center min-h-screen px-8 py-6">
+    <div id="app" class="w-full max-w-2xl p-8 bg-white rounded-lg shadow-lg">
+        <!-- First Container (Form) -->
+        <div id="formContainer" class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Real Fake Quotes</h1>
+            <h2 class="subtitle text-lg mb-6">The world's largest database of things people never said</h2>
 
-            <!-- Display Data -->
-            <div id="dataDisplay" class="text-center hidden">
-                <p id="displayMessage" class="font-bold mb-4"></p>
-                <p id="displayQuote" class="text-lg"></p>
-            </div>
-        </div>
+            <h3 class="text-2xl font-semibold mb-4">Create New Quote</h3>
 
-        <!-- Bottom Half: User Input Form -->
-        <div class="bottom-half bg-white">
-            <form id="userForm" class="space-y-4 w-full max-w-md mx-auto">
+            <form id="userForm" class="space-y-4">
                 <div>
                     <label for="name" class="block text-lg font-medium text-gray-700">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Choose someone famous" maxlength="30"
-                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg" required>
+                    <input type="text" id="name" name="name" placeholder="Choose someone famous" class="form-input border border-gray-300 rounded-md w-full p-2" required>
                 </div>
+
                 <div>
                     <label for="topic" class="block text-lg font-medium text-gray-700">Topic</label>
-                    <input type="text" id="topic" name="topic" placeholder="Give them a topic" maxlength="30"
-                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg" required>
+                    <input type="text" id="topic" name="topic" placeholder="Give them a topic" class="form-input border border-gray-300 rounded-md w-full p-2" required>
                 </div>
+
                 <div>
                     <label for="words" class="block text-lg font-medium text-gray-700">Word Count</label>
-                    <input type="number" id="words" name="words" placeholder="Pick a number 15-100" min="15" max="100"
-                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg" required>
+                    <input type="number" id="words" name="words" placeholder="Pick a number 15-100" class="form-input border border-gray-300 rounded-md w-full p-2" required>
                 </div>
-                <button type="submit"
-                        class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-lg">
-                    Submit
-                </button>
+
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Submit</button>
             </form>
+        </div>
+
+        <!-- Second Container (Initially Hidden) -->
+        <div id="responseContainer" class="hidden text-center mt-6 p-6 bg-gray-100 border border-gray-300 rounded-lg shadow-lg">
+            <p id="responseHeader" class="text-2xl font-bold mb-4"></p>
+            <p id="responseText" class="text-lg mb-4"></p>
+
+            <!-- Share and Do Another Buttons (Initially Hidden) -->
+            <div id="actionButtons" class="hidden flex justify-center space-x-4">
+                <button id="shareButton" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
+                    Copy
+                </button>
+                <button id="newQuoteButton" class="bg-blue-800 hover:bg-blue-700 text-white py-2 px-4 rounded-md">
+                    Do Another
+                </button>
+            </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/scripts/alt_script.js"></script>
+    <script src="scripts/alt_script.js"></script> <!-- Updated to use alt_script.js -->
 </body>
 </html>

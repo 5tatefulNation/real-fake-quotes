@@ -24,7 +24,7 @@ $(document).ready(function () {
 
         // Send the data to the PHP proxy server
         $.ajax({
-            url: 'http://137.184.56.82/real-fake-quotes-virtual/api/proxy.php', // Proxy URL
+            url: 'https://137.184.56.82/real-fake-quotes-virtual/api/proxy.php', // Proxy URL
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({

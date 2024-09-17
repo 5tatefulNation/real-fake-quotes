@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#userForm').on('submit', function (event) {
-        event.preventDefault(); // Prevents page refresh on form submission
+        event.preventDefault(); // Prevent page refresh
 
         // Collect user inputs
         var name = $('#name').val();
@@ -11,9 +11,20 @@ $(document).ready(function () {
         const systemMessage = "You are an imaginary essay writer. You will be given the name of a real or fictional person, along with a topic, and word count. Your job is to create a compelling, engaging, and interesting essay according to the parameters, in the style & voice of the given person.";
         const userPrompt = `Create an essay on the topic of '${topic}', as if you were ${name}, with a word count of ${words}.`;
 
+        // Update the response header before request
+        $('#responseHeader').html(`${name} never said:`); // Update with user input
+        $('#responseText').html('Waiting for a response...'); // Initial waiting message
+
+        // Hide the form container and show the response container
+        $('#formContainer').addClass('hidden');
+        $('#responseContainer').removeClass('hidden'); // Show response container
+
+        // Hide the action buttons while waiting for the response
+        $('#actionButtons').addClass('hidden');
+
         // Send the data to the PHP proxy server
         $.ajax({
-            url: 'http://137.184.56.82/real-fake-quotes-virtual/api/proxy.php', // Path to your PHP proxy
+            url: 'http://137.184.56.82/real-fake-quotes-virtual/api/proxy.php', // Proxy URL
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -29,23 +40,32 @@ $(document).ready(function () {
                     }
                 ]
             }),
-            success: function (response) {
-                // Update the UI with the fetched data
-                $('#header').hide();
-                $('#subheader').hide();
-                $('#dataDisplay').removeClass('hidden');
-                $('#dataDisplay').html(response.choices[0].message.content);
-                $('#top-half').addClass('quote-bg'); // Changes the background to black
+            success: function (response) { // Displays the response from the proxy server
+                $('#responseText').html(response.choices[0].message.content);
+
+                // Show the action buttons now that the response is back
+                $('#actionButtons').removeClass('hidden');
             },
-            error: function () {  // Handles errors
-                // Update the UI with a placeholder quote in case of an error
-                $('#header').hide();
-                $('#subheader').hide();
-                $('#dataDisplay').removeClass('hidden');
-                $('#displayMessage').text('Unknown figure said:');
-                $('#displayQuote').text('The greatest things are never said, but often thought.');
-                $('#top-half').addClass('quote-bg'); // Changes the background to black
+            error: function () {
+                $('#responseText').html('An error occurred while fetching data.');
             }
+        });
+    });
+
+    // Reset form and switch back to the form container when "Do Another" is clicked
+    $('#newQuoteButton').on('click', function () {
+        $('#responseContainer').addClass('hidden'); // Hide response container
+        $('#formContainer').removeClass('hidden'); // Show form container
+        $('#userForm')[0].reset(); // Reset the form
+    });
+
+    // Copy button functionality
+    $('#shareButton').on('click', function () {
+        const quoteText = $('#responseText').text();
+        navigator.clipboard.writeText(quoteText).then(() => {
+            alert('Quote copied to clipboard!');
+        }).catch((error) => {
+            console.error('Failed to copy text: ', error);
         });
     });
 });
